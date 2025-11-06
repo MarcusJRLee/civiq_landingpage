@@ -1,3 +1,17 @@
+## Setup
+
+```bash
+npx create-next-app@latest --typescript --eslint --tailwind --app --src-dir
+
+# Node ≥ 20 (Vercel uses the latest LTS)
+node -v   # should be 20.x or higher
+
+# Vercel CLI (optional but handy)
+npm i -g vercel
+
+npm i resend
+```
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
