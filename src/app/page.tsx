@@ -10,6 +10,7 @@ import { Footer } from "@/components/footer";
 import type { CtaFormProps } from "@/components/cta_form";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
+import { Contact } from "@/components/contact";
 import type { SignUpData } from "@/types/sign_up_data";
 
 function validateZip(zip: string): boolean {
@@ -102,6 +103,7 @@ export default function Home() {
         <Features />
         <HowItWorks />
         <Values />
+        <Contact />
       </main>
       <Footer {...formProps} onSubmit={handleSubmit} />
       <SpeedInsights />
