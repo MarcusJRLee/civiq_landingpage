@@ -10,8 +10,8 @@ npm i resend @vercel/speed-insights @vercel/analytics react-pdf
 # Vercel CLI (optional but handy).
 npm i -g vercel
 
-# Node ≥ 20 (Vercel uses the latest LTS).
-node -v   # should be 20.x or higher
+# Check that your Node version is ≥ 20 (Vercel uses the latest LTS).
+node -v
 
 # Check that your TypeScript compiles.
 npx tsc
