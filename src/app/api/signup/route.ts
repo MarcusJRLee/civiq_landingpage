@@ -1,45 +1,70 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
+import type { SignUpData } from "@/types/sign_up_data";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
-const admin = process.env.ADMIN_EMAIL!;
 
-export async function POST(request: Request) {
+/** Validates the SignUpData. */
+function validateData(data: SignUpData): NextResponse | null {
+  const { email, zip, timestamp } = data;
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.toLowerCase())) {
+    return NextResponse.json({ error: "Invalid email" }, { status: 400 });
+  }
+  if (!zip || !/^\d{5}$/.test(zip)) {
+    return NextResponse.json({ error: "Invalid ZIP code" }, { status: 400 });
+  }
+  if (!timestamp) {
+    return NextResponse.json({ error: "Invalid timestamp" }, { status: 400 });
+  }
+  return null;
+}
+
+/** Sends the email using Resend to complete the sign up process. */
+async function sendEmail(data: SignUpData) {
+  await resend.emails.send({
+    from: process.env.RESEND_FROM_EMAIL!,
+    to: process.env.RESEND_TO_EMAIL!,
+    subject: `CivIQ Sign Up: ${data.email}`,
+    html: `
+      <h2>New Signup!</h2>
+      <p><strong>Email:</strong> ${data.email}</p>
+      <p><strong>ZIP:</strong> ${data.zip}</p>
+      <p><strong>Timestamp:</strong> ${new Date(
+        data.timestamp
+      ).toLocaleString()}</p>
+    `,
+  });
+}
+
+/** Handler for the POST request at '/api/signup'. */
+export async function POST(request: Request): Promise<NextResponse> {
+  const isProd = process.env.NODE_ENV === "production";
+  if (!isProd) {
+    console.log(`'/api/signup' request received.`);
+  }
+
   try {
-    const body = await request.json();
-    const { name, email, message } = body;
-
-    // ---- simple validation ----
-    if (!name || !email || !message) {
-      return NextResponse.json(
-        { error: "All fields are required" },
-        { status: 400 }
-      );
+    // Validate the data.
+    const data = (await request.json()).data as SignUpData;
+    const failureResponseOr = validateData(data);
+    if (failureResponseOr) {
+      console.log(`'/api/signup' failed validation:`, failureResponseOr);
+      return failureResponseOr;
     }
 
-    // ---- send email ----
-    await resend.emails.send({
-      from: "Signup <onboarding@resend.dev>", // verified sender in Resend
-      to: [admin],
-      subject: `New signup: ${name}`,
-      text: `
-Name: ${name}
-Email: ${email}
-Message:
-${message}
-      `.trim(),
-      // optional HTML version
-      html: `<p><strong>Name:</strong> ${name}</p>
-             <p><strong>Email:</strong> ${email}</p>
-             <p><strong>Message:</strong></p>
-             <p>${message.replace(/\n/g, "<br>")}</p>`,
-    });
+    // If in production, send an email.
+    if (isProd) {
+      sendEmail(data);
+      console.log(`Successful sign up at ${data.timestamp}`);
+    } else {
+      console.log(`Non prod success (${process.env.NODE_ENV}):`, data);
+    }
 
     return NextResponse.json({ success: true });
-  } catch (e: any) {
-    console.error(e);
+  } catch (reason: unknown) {
+    console.error("Signup email error:", reason);
     return NextResponse.json(
-      { error: "Failed to send email" },
+      { error: "Failed to process signup" },
       { status: 500 }
     );
   }

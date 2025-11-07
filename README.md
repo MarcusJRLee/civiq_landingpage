@@ -1,40 +1,36 @@
 ## Setup
 
 ```bash
+# Created using.
 npx create-next-app@latest --typescript --eslint --tailwind --app --src-dir
 
-# Node ≥ 20 (Vercel uses the latest LTS)
-node -v   # should be 20.x or higher
+# Installed dependencies.
+npm i resend @vercel/speed-insights @vercel/analytics react-pdf
 
-# Vercel CLI (optional but handy)
+# Vercel CLI (optional but handy).
 npm i -g vercel
 
-npm i resend
-```
+# Node ≥ 20 (Vercel uses the latest LTS).
+node -v   # should be 20.x or higher
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Check that your TypeScript compiles.
+npx tsc
 
-## Getting Started
-
-First, run the development server:
-
-```bash
+# Run a dev server.
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# Other npm commands (see pacakge.json for complete list).
+npm run build
+npm run start
+npm run lint
+
+# Test the SignUp API endpoint.
+curl -X POST http://localhost:3000/api/signup -H "Content-Type: application/json" -d '{"email": "test@mjrlee.com", "zip": 11201, "timestamp": 1678886400000}'
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
 ## Learn More
+
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 To learn more about Next.js, take a look at the following resources:
 
