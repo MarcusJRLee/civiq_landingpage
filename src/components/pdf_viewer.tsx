@@ -106,8 +106,8 @@ export const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
                     justifyContent: "center",
                   }}
                 >
-                  <div className="[&_canvas]:!m-0 [&_canvas]:!border-0 [&_div]:!m-0 [&_div]:!border-0 w-full h-full flex items-center justify-center overflow-hidden">
-                    <div className="w-full h-full [&>div]:w-full [&>div]:h-full [&_canvas]:!max-w-full [&_canvas]:!max-h-full [&_canvas]:!w-full [&_canvas]:!h-full [&_canvas]:!object-contain">
+                  <div className="[&_canvas]:m-0! [&_canvas]:border-0! [&_div]:m-0! [&_div]:border-0! w-full h-full flex items-center justify-center overflow-hidden">
+                    <div className="w-full h-full [&>div]:w-full [&>div]:h-full [&_canvas]:max-w-full! [&_canvas]:max-h-full! [&_canvas]:w-full! [&_canvas]:h-full! [&_canvas]:object-contain!">
                       <Page
                         pageNumber={index + 1}
                         width={1920}

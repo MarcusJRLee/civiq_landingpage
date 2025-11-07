@@ -42,7 +42,7 @@ export const CtaForm: React.FC<CtaFormProps> = ({
           value={email}
           onChange={onEmailChange}
           placeholder="Email address"
-          className="flex-grow w-full px-4 py-2.5 text-base text-slate-900 bg-white border border-slate-300 rounded-md focus:ring-2 focus:ring-brand-purple focus:border-brand-purple outline-none transition duration-150 ease-in-out"
+          className="grow w-full px-4 py-2.5 text-base text-slate-900 bg-white border border-slate-300 rounded-md focus:ring-2 focus:ring-brand-purple focus:border-brand-purple outline-none transition duration-150 ease-in-out"
           aria-label="Email address for early access"
         />
         <input
