@@ -5,6 +5,13 @@ export interface SignUpData {
   timestamp: number;
 }
 
+/** EventNames for Meta Ads Events. */
+export enum EventName {
+  ViewContent = "ViewContent",
+  CompleteRegistration = "CompleteRegistration",
+  Contact = "Contact",
+}
+
 /** Payload for sending a request to `/api/events`. */
 export interface Event {
   eventName: EventName;
@@ -15,19 +22,12 @@ export interface Event {
   customData: CustomData;
 }
 
-/** EventNames for Meta Ads Events. */
-export enum EventName {
-  ViewContent = "ViewContent",
-  CompleteRegistration = "CompleteRegistration",
-  Contact = "Contact",
-}
-
 /**
  * UserData for a Meta Ad Event using the Conversions API:
  * https://developers.facebook.com/docs/marketing-api/conversions-api
  * https://developers.facebook.com/docs/marketing-api/conversions-api/parameters
  */
-interface UserData {
+export interface UserData {
   em?: string; // Email
   ph?: string; // Phone
   fn?: string; // First Name
@@ -47,7 +47,7 @@ interface UserData {
  * CustomData for a Meta Ad Event using the Conversions API:
  * https://developers.facebook.com/docs/marketing-api/conversions-api
  */
-interface CustomData {
+export interface CustomData {
   content_name?: string;
   content_category?: string;
   status?: string;

@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
-import type { SignUpData } from "@/types/types";
-import { createCompleteRegistrationEvent } from "@/utility/events";
+import { Event, SignUpData } from "@/types/types";
 import { sendMetaConversionApiPayload } from "@/utility/events";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -134,7 +133,9 @@ export async function POST(request: Request): Promise<NextResponse> {
 
   try {
     // Validate the data.
-    const data = (await request.json()) as SignUpData;
+    const payload = await request.json();
+    const data = payload.data as SignUpData;
+
     const failureResponseOr = validateData(data);
     if (failureResponseOr) {
       console.log(`'/api/signup' failed validation:`, failureResponseOr);
@@ -150,8 +151,8 @@ export async function POST(request: Request): Promise<NextResponse> {
     }
 
     // Send a Meta Conversion API event to track this signup.
-    const registrationEvent = await createCompleteRegistrationEvent(data);
-    sendMetaConversionApiPayload(registrationEvent);
+    const event = payload.event as Event;
+    sendMetaConversionApiPayload(event);
 
     return NextResponse.json({ success: true });
   } catch (reason: unknown) {

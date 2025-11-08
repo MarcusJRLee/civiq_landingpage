@@ -9,8 +9,9 @@ import type { CtaFormProps } from "@/components/cta_form";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
 import { Contact } from "@/components/contact";
-import type { SignUpData } from "@/types/types";
+import { SignUpData } from "@/types/types";
 import { OurVision } from "@/components/our_vision";
+import { createCompleteRegistrationEvent } from "@/utility/events";
 
 function validateZip(zip: string): boolean {
   const re = /^\d{5}$/;
@@ -22,13 +23,14 @@ function validateEmail(email: string): boolean {
   return re.test(String(email).toLowerCase());
 }
 
-async function sendSignupPayload(payload: SignUpData): Promise<Response> {
+async function sendSignupPayload(data: SignUpData): Promise<Response> {
   try {
-    console.log("Early access signup:", payload);
+    console.log("Early access signup:", data);
+    const event = await createCompleteRegistrationEvent(data);
     return await fetch("/api/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
+      body: JSON.stringify({ data, event }),
     });
   } catch (reason: unknown) {
     console.log(reason);
