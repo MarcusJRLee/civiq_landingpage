@@ -49,7 +49,7 @@ export const OurVision: React.FC = () => {
               />
               <Step
                 title="Projects Get Done"
-                description="Constituents shape well written bills that ensure projects get completed - for example, stipulating that contractors don't get paid until a project like high speed rail is done, moving risk from the public sector to the private sector."
+                description="Constituents advocate for well written bills that ensure projects get completed - for example, stipulating that contractors don't get paid until a project like high speed rail is done, moving risk from the public sector to the private sector."
               />
             </div>
           </div>
