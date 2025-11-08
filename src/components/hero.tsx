@@ -27,7 +27,7 @@ export const Hero: React.FC<CtaFormProps> = (props) => {
           </h1>
           <p className="mt-6 text-lg md:text-xl text-slate-600">
             The platform for modern governance. Hold politicians accountable,
-            shape policy, and be part of a more transparent democracy.
+            shape policy, and drive real change.
           </p>
           <div className="mt-10 max-w-2xl mx-auto">
             <CtaForm {...props} />

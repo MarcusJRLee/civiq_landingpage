@@ -5,13 +5,13 @@ import { Header } from "@/components/header";
 import { Hero } from "@/components/hero";
 import { Features } from "@/components/features";
 import { HowItWorks } from "@/components/how_it_works";
-import { Values } from "@/components/values";
 import { Footer } from "@/components/footer";
 import type { CtaFormProps } from "@/components/cta_form";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
 import { Contact } from "@/components/contact";
 import type { SignUpData } from "@/types/sign_up_data";
+import { OurVision } from "@/components/our_vision";
 
 function validateZip(zip: string): boolean {
   const re = /^\d{5}$/;
@@ -101,8 +101,8 @@ export default function Home() {
       <main>
         <Hero {...formProps} onSubmit={handleSubmit} />
         <Features />
+        <OurVision />
         <HowItWorks />
-        <Values />
         <Contact />
       </main>
       <Footer {...formProps} onSubmit={handleSubmit} />

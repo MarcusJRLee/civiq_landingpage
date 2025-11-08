@@ -6,7 +6,7 @@ const Step: React.FC<{
   description: string;
 }> = ({ number, title, description }) => (
   <div className="relative">
-    <div className="absolute -left-4 top-1 flex items-center justify-center w-8 h-8 bg-brand-light text-brand-purple font-bold rounded-full border-2 border-white">
+    <div className="absolute -left-4 top-1 flex items-center justify-center w-8 h-8 bg-brand-light text-brand-purple font-bold rounded-full border-2 border-slate-100">
       {number}
     </div>
     <div className="pl-8">
@@ -18,7 +18,7 @@ const Step: React.FC<{
 
 export const HowItWorks: React.FC = () => {
   return (
-    <section className="py-20 md:py-28 bg-white">
+    <section className="py-20 md:py-28 bg-slate-100">
       <div className="container mx-auto px-6">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900">
