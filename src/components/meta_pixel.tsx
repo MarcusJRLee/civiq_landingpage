@@ -3,11 +3,12 @@ import Script from "next/script";
 
 export const MetaPixel: React.FC = () => {
   return (
-    <Script
-      id="meta-pixel-script"
-      strategy="lazyOnload"
-      dangerouslySetInnerHTML={{
-        __html: `
+    <>
+      <Script
+        id="meta-pixel-script"
+        strategy="lazyOnload"
+        dangerouslySetInnerHTML={{
+          __html: `
             !function(f,b,e,v,n,t,s)
             {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
             n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -19,7 +20,18 @@ export const MetaPixel: React.FC = () => {
             fbq('init', '1913736206159828');
             fbq('track', 'PageView');
           `,
-      }}
-    />
+        }}
+      />
+      <noscript>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          height="1"
+          width="1"
+          style={{ display: "none" }}
+          src="https://www.facebook.com/tr?id=1913736206159828&ev=PageView&noscript=1"
+          alt=""
+        />
+      </noscript>
+    </>
   );
 };
