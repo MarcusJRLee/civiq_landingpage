@@ -96,18 +96,20 @@ async function sendEmail(data: SignUpData) {
       <p>
         CivIQ is not yet available in your area (${data.zip}), but rest assured:
         <span class="highlight"
-          >we’ll send you a personal invitation the moment it launches near
+          >we'll send you a personal invitation the moment it launches near
           you</span
         >.
       </p>
 
       <p>
-        We deeply appreciate your interest and are committed to building a
-        future where governments are truly responsive to their constituents —
-        with your voice shaping policy, anytime, not just on election day.
+        We use these early access sign ups to inform where to launch next so
+        share CivIQ with your friends to get access sooner!
       </p>
 
-      <p>Stay tuned. The next era of governance is coming.</p>
+      <p>
+        We deeply appreciate your interest and are excited to build a future
+        where government is truly responsive to your voice.
+      </p>
     </div>
 
     <div class="footer">
