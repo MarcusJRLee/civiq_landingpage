@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
-import type { SignUpData } from "@/types/sign_up_data";
+import type { SignUpData } from "@/types/types";
+import { createCompleteRegistrationEvent } from "@/utility/events";
+import { sendMetaConversionApiPayload } from "@/utility/events";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -21,7 +23,6 @@ function validateData(data: SignUpData): NextResponse | null {
 
 /** Sends the email using Resend to complete the sign up process. */
 async function sendEmail(data: SignUpData) {
-  const formattedTimestamp = new Date(data.timestamp).toLocaleString();
   await resend.emails.send({
     from: process.env.RESEND_FROM_EMAIL!,
     to: data.email,
@@ -133,7 +134,7 @@ export async function POST(request: Request): Promise<NextResponse> {
 
   try {
     // Validate the data.
-    const data = (await request.json()).data as SignUpData;
+    const data = (await request.json()) as SignUpData;
     const failureResponseOr = validateData(data);
     if (failureResponseOr) {
       console.log(`'/api/signup' failed validation:`, failureResponseOr);
@@ -147,6 +148,10 @@ export async function POST(request: Request): Promise<NextResponse> {
     } else {
       console.log(`Non prod success (${process.env.NODE_ENV}):`, data);
     }
+
+    // Send a Meta Conversion API event to track this signup.
+    const registrationEvent = await createCompleteRegistrationEvent(data);
+    sendMetaConversionApiPayload(registrationEvent);
 
     return NextResponse.json({ success: true });
   } catch (reason: unknown) {

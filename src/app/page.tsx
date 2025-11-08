@@ -9,7 +9,7 @@ import type { CtaFormProps } from "@/components/cta_form";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
 import { Contact } from "@/components/contact";
-import type { SignUpData } from "@/types/sign_up_data";
+import type { SignUpData } from "@/types/types";
 import { OurVision } from "@/components/our_vision";
 
 function validateZip(zip: string): boolean {
@@ -28,7 +28,7 @@ async function sendSignupPayload(payload: SignUpData): Promise<Response> {
     return await fetch("/api/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ data: payload }),
+      body: JSON.stringify(payload),
     });
   } catch (reason: unknown) {
     console.log(reason);
