@@ -21,18 +21,103 @@ function validateData(data: SignUpData): NextResponse | null {
 
 /** Sends the email using Resend to complete the sign up process. */
 async function sendEmail(data: SignUpData) {
+  const formattedTimestamp = new Date(data.timestamp).toLocaleString();
   await resend.emails.send({
     from: process.env.RESEND_FROM_EMAIL!,
-    to: process.env.RESEND_TO_EMAIL!,
-    subject: `CivIQ Sign Up: ${data.email}`,
+    to: data.email,
+    bcc: process.env.RESEND_TO_EMAIL!,
+    subject: `Welcome to CivIQ!`,
     html: `
-      <h2>New Signup!</h2>
-      <p><strong>Email:</strong> ${data.email}</p>
-      <p><strong>ZIP:</strong> ${data.zip}</p>
-      <p><strong>Timestamp:</strong> ${new Date(
-        data.timestamp
-      ).toLocaleString()}</p>
-    `,
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Welcome to CivIQ!</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          sans-serif;
+        line-height: 1.6;
+        color: #333;
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      .header {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      .header h1 {
+        color: #1a1a1a;
+        margin-bottom: 8px;
+        font-size: 28px;
+      }
+      .civiq-brand {
+        color: #6d28d9;
+        font-weight: 700;
+        font-size: 32px;
+      }
+      .content {
+        background: #f9f9f9;
+        padding: 24px;
+        border-radius: 12px;
+        border-left: 4px solid #6d28d9;
+      }
+      .highlight {
+        color: #6d28d9;
+        font-weight: 600;
+      }
+      .footer {
+        margin-top: 30px;
+        text-align: center;
+        color: #666;
+        font-size: 14px;
+      }
+      .link {
+        color: #6d28d9;
+        text-decoration: none;
+        font-weight: 600;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <h1>Welcome to <span class="civiq-brand">CivIQ</span>!</h1>
+      <p><em>The platform for modern governance.</em></p>
+    </div>
+
+    <div class="content">
+      <p>
+        Thank you for signing up for the CivIQ beta program — we’re excited to
+        have you on board!
+      </p>
+
+      <p>
+        CivIQ is not yet available in your area (${data.zip}), but rest assured:
+        <span class="highlight"
+          >we’ll send you a personal invitation the moment it launches near
+          you</span
+        >.
+      </p>
+
+      <p>
+        We deeply appreciate your interest and are committed to building a
+        future where governments are truly responsive to their constituents —
+        with your voice shaping policy, anytime, not just on election day.
+      </p>
+
+      <p>Stay tuned. The next era of governance is coming.</p>
+    </div>
+
+    <div class="footer">
+      <p>
+        <em>CivIQ • <a href="https://bit.ly/49abdbE">website</a></em>
+      </p>
+    </div>
+  </body>
+</html>
+`,
   });
 }
 

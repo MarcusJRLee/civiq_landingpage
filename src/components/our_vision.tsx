@@ -21,36 +21,35 @@ export const OurVision: React.FC = () => {
       <div className="container mx-auto px-6">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900">
-            We envision a world where:
+            We Envision a World Where:
           </h2>
-          <p className="mt-4 text-lg text-slate-600">Something here?</p>
         </div>
         <div className="max-w-2xl mx-auto">
           <div className="ml-4">
             <div className="space-y-16">
               <Step
                 title="Your Vote Matters"
-                description="You vote on specific, relevant issues as they arise, replacing the frustrating cycle of only choosing between a couple of candidates every few years."
+                description="Vote on specific issues as they arise - capturing nuance beyond picking the “lesser of two evils.” Your input stays active and influential long after any candidate takes office."
               />
               <Step
                 title="You Know Where Your Taxes Are Going"
-                description="CivIQ eliminates the friction of looking through dozens of government websites to get the answers to your budgetary questions by providing world class UI and AI analysis."
+                description="CivIQ eliminates the friction of scouring dozens of government websites to understand how your money is being spent by providing world class UI and AI assisted analysis."
               />
               <Step
                 title="Good Ideas Get Found"
-                description="Like what YouTube and TikTok has done for entertainment, CivIQ's algorithm will promote the best ideas from around the world no matter where they come from."
+                description="Like what YouTube and TikTok has done for entertainment, CivIQ elevates the best ideas from around the world no matter where they come from."
               />
               <Step
                 title="Your Representatives Answer to You"
-                description="Representatives know exactly what their constituents want, and a clear, objective scorecard shows who delivered on those preferences—and who didn't."
+                description="Representatives receive clear mandates from their consitutents, and an objective scorecard shows who delivered on those preferences—and who didn't."
               />
               <Step
                 title="You Understand Your Government"
-                description="CivIQ allows you to tailor a personal AI Agent that answers your questions about bills, candidates, and how your government is run."
+                description="CivIQ allows you to tailor a personal AI Agent that answers your questions about bills, candidates, and what is going on in your government."
               />
               <Step
                 title="Projects Get Done"
-                description="Popular projects like high-speed rail are completed in a timely manner because the bills we pass specify that contractors don't get paid until the job is done."
+                description="Constituents shape well written bills that ensure projects get completed - for example, stipulating that contractors don't get paid until a project like high speed rail is done, moving risk from the public sector to the private sector."
               />
             </div>
           </div>

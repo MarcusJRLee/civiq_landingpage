@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import { Header } from "@/components/header";
 import { Hero } from "@/components/hero";
 import { Features } from "@/components/features";
-import { HowItWorks } from "@/components/how_it_works";
 import { Footer } from "@/components/footer";
 import type { CtaFormProps } from "@/components/cta_form";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -102,7 +101,6 @@ export default function Home() {
         <Hero {...formProps} onSubmit={handleSubmit} />
         <Features />
         <OurVision />
-        <HowItWorks />
         <Contact />
       </main>
       <Footer {...formProps} onSubmit={handleSubmit} />

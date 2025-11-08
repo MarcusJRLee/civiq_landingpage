@@ -5,8 +5,6 @@ import { Document, Page, pdfjs } from "react-pdf";
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import "react-pdf/dist/Page/TextLayer.css";
 
-// Crucial: Set the PDF worker source for react-pdf to work correctly in the
-// browser. The library itself provides a helper for this.
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   "pdfjs-dist/build/pdf.worker.min.mjs",
   import.meta.url
@@ -29,6 +27,10 @@ export const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
     () => setPageNumber((prev) => Math.min(numPages, prev + 1)),
     [numPages]
   );
+
+  const goToPage = (page: number) => {
+    setPageNumber(page);
+  };
 
   const onDocumentLoadSuccess = ({ numPages }: { numPages: number }) => {
     setNumPages(numPages);
@@ -70,8 +72,6 @@ export const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [handleKeyDown]);
 
-  const progress = numPages > 1 ? ((pageNumber - 1) / (numPages - 1)) * 100 : 0;
-
   return (
     <div className="bg-white overflow-hidden rounded-xl">
       {error ? (
@@ -86,10 +86,53 @@ export const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
           }
         >
           <div
-            className="flex justify-center bg-slate-50 relative cursor-pointer w-full"
-            onClick={handlePageClick}
+            className="relative flex justify-center bg-slate-50 cursor-pointer w-full"
             style={{ aspectRatio: "16/9" }}
+            onClick={handlePageClick}
           >
+            {/* ---- LEFT ARROW (responsive size) ---- */}
+            {numPages > 1 && pageNumber > 1 && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  goToPrevPage();
+                }}
+                className="absolute left-3 top-1/2 -translate-y-1/2 w-[8vw] h-[12vw] max-w-16 max-h-24 flex items-center justify-center opacity-30 hover:opacity-100 transition-opacity z-10"
+                aria-label="Previous page"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="w-full h-full"
+                >
+                  <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
+                </svg>
+              </button>
+            )}
+
+            {/* ---- RIGHT ARROW (responsive size) ---- */}
+            {numPages > 1 && pageNumber < numPages && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  goToNextPage();
+                }}
+                className="absolute right-3 top-1/2 -translate-y-1/2 w-[8vw] h-[12vw] max-w-16 max-h-24 flex items-center justify-center opacity-30 hover:opacity-100 transition-opacity z-10"
+                aria-label="Next page"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="w-full h-full"
+                >
+                  <path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z" />
+                </svg>
+              </button>
+            )}
+
+            {/* ---- PAGES ---- */}
             {Array.from(new Array(numPages), (el, index) => {
               const isVisible = pageNumber === index + 1;
 
@@ -119,15 +162,28 @@ export const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl }) => {
               );
             })}
           </div>
+
+          {/* ---- PAGE INDICATOR: CIRCLES ---- */}
+          {numPages > 1 && (
+            <div className="flex justify-center items-center gap-1 py-2 px-4">
+              {Array.from({ length: numPages }, (_, i) => (
+                <button
+                  key={i + 1}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    goToPage(i + 1);
+                  }}
+                  className={`w-2 h-2 rounded-full transition-all duration-200 ${
+                    pageNumber === i + 1
+                      ? "bg-brand-purple"
+                      : "border border-slate-100 bg-slate-100"
+                  }`}
+                  aria-label={`Go to page ${i + 1}`}
+                />
+              ))}
+            </div>
+          )}
         </Document>
-      )}
-      {numPages > 1 && (
-        <div className="h-1 bg-slate-300 relative">
-          <div
-            className="h-full bg-brand-purple transition-all duration-300"
-            style={{ width: `${progress}%` }}
-          />
-        </div>
       )}
     </div>
   );

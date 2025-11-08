@@ -28,7 +28,10 @@ export const CtaForm: React.FC<CtaFormProps> = ({
         role="alert"
       >
         <p className="font-bold">Thank you for your interest!</p>
-        <p>We&apos;ve received your submission. We&apos;ll be in touch soon.</p>
+        <p>
+          We&apos;ve received your submission. We&apos;ll be in touch soon with
+          an invitation to the beta.
+        </p>
       </div>
     );
   }

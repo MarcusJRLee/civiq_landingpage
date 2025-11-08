@@ -5,7 +5,7 @@ const GOOGLE_FORM_LINK =
 
 export const Contact: React.FC = () => {
   return (
-    <section className="py-20 md:py-28 bg-slate-50">
+    <section className="py-20 md:py-28 bg-slate-100">
       <div className="container mx-auto px-6 text-center max-w-2xl">
         <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900">
           Want to get in touch?
