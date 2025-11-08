@@ -112,7 +112,10 @@ async function sendEmail(data: SignUpData) {
 
     <div class="footer">
       <p>
-        <em>CivIQ • <a href="https://bit.ly/49abdbE">website</a></em>
+        <em
+          >CivIQ • <a href="https://forms.gle/8VUcLtYRrHyJBsw9A">Contact</a> •
+          <a href="https://bit.ly/49abdbE">Website</a></em
+        >
       </p>
     </div>
   </body>
