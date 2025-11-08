@@ -14,12 +14,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      {/* Meta Pixel Script */}
-      <Script
-        id="meta-pixel-script"
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: `
+      <head>
+        {/* Meta Pixel */}
+        <Script
+          id="meta-pixel-script"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
             !function(f,b,e,v,n,t,s)
             {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
             n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -31,11 +32,8 @@ export default function RootLayout({
             fbq('init', '1913736206159828');
             fbq('track', 'PageView');
           `,
-        }}
-      />
-
-      <head>
-        {/* Meta Pixel */}
+          }}
+        />
         <noscript>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
