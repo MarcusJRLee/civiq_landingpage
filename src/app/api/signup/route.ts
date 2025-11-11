@@ -2,6 +2,10 @@ import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import { Event, SignUpData } from "@/types/types";
 import { sendMetaConversionApiPayload } from "@/utility/events";
+import { supabase } from "@/utility/supabase";
+import { Database } from "@/types/supabase";
+
+type SignUpsInsert = Database["public"]["Tables"]["sign_ups"]["Insert"];
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -21,10 +25,10 @@ function validateData(data: SignUpData): NextResponse | null {
 }
 
 /** Sends the email using Resend to complete the sign up process. */
-async function sendEmail(data: SignUpData) {
+async function sendEmail(signUpData: SignUpData) {
   await resend.emails.send({
     from: process.env.RESEND_FROM_EMAIL!,
-    to: data.email,
+    to: signUpData.email,
     bcc: process.env.RESEND_TO_EMAIL!,
     subject: `Welcome to CivIQ!`,
     html: `
@@ -94,7 +98,7 @@ async function sendEmail(data: SignUpData) {
       </p>
 
       <p>
-        CivIQ is not yet available in your area (${data.zip}), but rest assured:
+        CivIQ is not yet available in your area (${signUpData.zip}), but rest assured:
         <span class="highlight"
           >we'll send you a personal invitation the moment it launches near
           you</span
@@ -136,9 +140,9 @@ export async function POST(request: Request): Promise<NextResponse> {
   try {
     // Validate the data.
     const payload = await request.json();
-    const data = payload.data as SignUpData;
+    const signUpData = payload.data as SignUpData;
 
-    const failureResponseOr = validateData(data);
+    const failureResponseOr = validateData(signUpData);
     if (failureResponseOr) {
       console.log(`'/api/signup' failed validation:`, failureResponseOr);
       return failureResponseOr;
@@ -146,10 +150,22 @@ export async function POST(request: Request): Promise<NextResponse> {
 
     // If in production, send an email.
     if (isProd) {
-      sendEmail(data);
-      console.log(`Successful sign up at ${data.timestamp}`);
+      sendEmail(signUpData);
+      console.log(`Successful sign up at ${signUpData.timestamp}`);
     } else {
-      console.log(`Non prod success (${process.env.NODE_ENV}):`, data);
+      console.log(`Non prod success (${process.env.NODE_ENV}):`, signUpData);
+    }
+
+    // Update Supabase "sign_ups" table.
+    const newTableEntry: SignUpsInsert = {
+      email: signUpData.email,
+      zip_code: Number(signUpData.zip),
+    };
+    const { data, error } = await supabase
+      .from("sign_ups")
+      .insert([newTableEntry]);
+    if (error) {
+      console.log(`"sign_ups" insert error: `, error);
     }
 
     // Send a Meta Conversion API event to track this signup.

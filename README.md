@@ -28,6 +28,22 @@ npm run lint
 curl -X POST http://localhost:3000/api/signup -H "Content-Type: application/json" -d '{"email": "test@mjrlee.com", "zip": 11201, "timestamp": 1678886400000}'
 ```
 
+Supabase setup:
+
+```bash
+# Test it works
+npx supabase --help
+
+# Login (one-time)
+npx supabase login
+
+# Link your project (replace YOUR_PROJECT_REF with your Supabase project ref, e.g., abcdef123456)
+npx supabase link --project-ref YOUR_PROJECT_REF
+
+# Generate types (outputs to stdout – redirect to a file)
+npx supabase gen types typescript --project-id YOUR_PROJECT_REF > src/types/supabase.ts
+```
+
 ## Learn More
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
