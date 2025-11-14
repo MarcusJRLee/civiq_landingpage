@@ -161,9 +161,7 @@ export async function POST(request: Request): Promise<NextResponse> {
       email: signUpData.email,
       zip_code: Number(signUpData.zip),
     };
-    const { data, error } = await supabase
-      .from("sign_ups")
-      .insert([newTableEntry]);
+    const { error } = await supabase.from("sign_ups").insert([newTableEntry]);
     if (error) {
       console.log(`"sign_ups" insert error: `, error);
     }
