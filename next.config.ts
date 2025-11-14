@@ -8,9 +8,10 @@ const nextConfig: NextConfig = {
     return {
       fallback: [
         {
-          // This will match any path that didn't match an existing file or defined route
+          // This will match any path that didn't match an existing file or
+          // defined route.
           source: "/:path*",
-          // The destination is the home page route
+          // The destination is the home page route.
           destination: "/",
         },
       ],
